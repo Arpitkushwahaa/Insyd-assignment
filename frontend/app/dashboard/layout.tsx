@@ -129,13 +129,3 @@ export default function DashboardLayout({
     </div>
   );
 }
-
-      {/* Main content */}
-      <div className="pl-64">
-        <main className="p-8">
-          {children}
-        </main>
-      </div>
-    </div>
-  );
-}
