@@ -96,27 +96,34 @@ export default function StockMovementPage() {
   };
 
   const getTypeIcon = (type: string) => {
-    switch(type) {
-      case 'IN':
+    switch(type?.toLowerCase()) {
+      case 'inward':
+      case 'in':
         return <ArrowDownCircle className="h-4 w-4 text-green-600" />;
-      case 'OUT':
+      case 'outward':
+      case 'out':
         return <ArrowUpCircle className="h-4 w-4 text-blue-600" />;
-      case 'DAMAGE':
+      case 'damage':
         return <TrendingDown className="h-4 w-4 text-red-600" />;
+      case 'loss':
+        return <TrendingDown className="h-4 w-4 text-orange-600" />;
       default:
         return <TrendingUp className="h-4 w-4 text-gray-600" />;
     }
   };
 
   const getTypeBadge = (type: string) => {
+    const typeUpper = type?.toUpperCase();
     const variants: any = {
+      'INWARD': 'default',
       'IN': 'default',
+      'OUTWARD': 'secondary',
       'OUT': 'secondary',
       'DAMAGE': 'destructive',
       'LOSS': 'destructive',
       'ADJUSTMENT': 'outline'
     };
-    return <Badge variant={variants[type] || 'outline'}>{type}</Badge>;
+    return <Badge variant={variants[typeUpper] || 'outline'}>{typeUpper}</Badge>;
   };
 
   return (
@@ -236,7 +243,7 @@ export default function StockMovementPage() {
                   <div key={movement._id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
                     <div className="flex items-center gap-4">
                       <div className="p-2 bg-gray-100 rounded-lg">
-                        {getTypeIcon(movement.type)}
+                        {getTypeIcon(movement.movementType)}
                       </div>
                       <div>
                         <p className="font-semibold">{typeof sku === 'object' ? sku.name : 'Unknown SKU'}</p>
@@ -248,7 +255,7 @@ export default function StockMovementPage() {
                       </div>
                     </div>
                     <div className="text-right">
-                      {getTypeBadge(movement.type)}
+                      {getTypeBadge(movement.movementType)}
                       <p className="text-lg font-bold mt-1">{formatNumber(movement.quantity)}</p>
                       <p className="text-xs text-gray-500">{movement.performedBy?.name}</p>
                       <p className="text-xs text-gray-400">
