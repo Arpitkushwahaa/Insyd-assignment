@@ -37,11 +37,10 @@ export const register = async (req: AuthRequest, res: Response) => {
     });
 
     // Generate token
-    const expiresIn = (process.env.JWT_EXPIRES_IN || '7d') as string;
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET!,
-      { expiresIn }
+      { expiresIn: '7d' }
     );
 
     res.status(201).json({
