@@ -110,7 +110,7 @@ export default function DashboardLayout({
             </div>
             <Button
               variant="outline"
-              className="w-full"
+              className="w-full border-2 border-gray-300 hover:border-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200 font-medium"
               onClick={handleLogout}
             >
               <LogOut className="h-4 w-4 mr-2" />
@@ -119,6 +119,16 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
+
+      {/* Main content */}
+      <div className="pl-64">
+        <main className="p-8">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}
 
       {/* Main content */}
       <div className="pl-64">
