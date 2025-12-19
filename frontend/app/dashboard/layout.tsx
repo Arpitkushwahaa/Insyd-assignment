@@ -47,16 +47,16 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
       {/* Sidebar */}
-      <div className="fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-200">
+      <div className="fixed inset-y-0 left-0 w-64 bg-white/80 backdrop-blur-xl border-r border-gray-200/50 shadow-xl">
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-200">
-            <div className="h-8 w-8 rounded bg-primary flex items-center justify-center">
-              <Package className="h-5 w-5 text-white" />
+          <div className="flex items-center gap-2 px-6 py-6 border-b border-gray-200/50">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform">
+              <Package className="h-6 w-6 text-white" />
             </div>
-            <span className="font-bold text-lg">Insyd Inventory</span>
+            <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Insyd</span>
           </div>
 
           {/* Navigation */}
