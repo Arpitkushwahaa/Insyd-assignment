@@ -103,26 +103,7 @@ export const createStockMovement = async (req: AuthRequest, res: Response) => {
       { session }
     );
 
-    // Create audit log
-    await AuditLog.create(
-      [
-        {
-          action: `Stock ${movementType}`,
-          entityType: 'stock',
-          entityId: movement[0]._id,
-          performedBy: req.user!.id,
-          performedByName: req.user!.name,
-          performedByRole: req.user!.role,
-          changes: {
-            sku: sku.skuCode,
-            previousStock,
-            newStock,
-            quantity,
-          },
-        },
-      ],
-      { session }
-    );
+    // Skip audit log for now (no real user authentication)
 
     await session.commitTransaction();
 
@@ -167,7 +148,8 @@ export const getStockMovements = async (req: AuthRequest, res: Response) => {
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(Number(limit))
-        .populate('sku', 'skuCode name category'),
+        .populate('sku', 'skuCode name category')
+        .lean(),
       StockMovement.countDocuments(query),
     ]);
 

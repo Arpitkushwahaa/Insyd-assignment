@@ -1,12 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/authStore';
-import { Package, LogOut, Home, Box, TrendingUp, History, Users } from 'lucide-react';
+import { Package, Home, Box, TrendingUp, History } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const navigation = [
@@ -14,7 +10,7 @@ const navigation = [
   { name: 'Inventory', href: '/dashboard/inventory', icon: Box },
   { name: 'Stock Movement', href: '/dashboard/stock', icon: TrendingUp },
   { name: 'Insights', href: '/dashboard/insights', icon: TrendingUp },
-  { name: 'Audit Log', href: '/dashboard/audit', icon: History, adminOnly: true },
+  { name: 'Audit Log', href: '/dashboard/audit', icon: History },
 ];
 
 export default function DashboardLayout({
@@ -22,18 +18,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
-  const { user, logout, checkAuth } = useAuthStore();
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const handleLogout = () => {
-    logout();
-    router.push('/login');
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-purple-50/30">
@@ -51,7 +36,6 @@ export default function DashboardLayout({
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-2">
             {navigation.map((item) => {
-              if (item.adminOnly && user?.role !== 'admin') return null;
               const isActive = pathname === item.href;
               return (
                 <Link
@@ -73,39 +57,6 @@ export default function DashboardLayout({
               );
             })}
           </nav>
-
-          {/* User info */}
-          <div className="px-4 py-4 border-t border-gray-200/50">
-            <div className="flex items-center gap-3 mb-4 p-3 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50">
-              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg">
-                <Users className="h-6 w-6 text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-gray-900 truncate">
-                  {user?.name || 'Guest'}
-                </p>
-                <p className="text-xs font-medium text-gray-600 truncate">
-                  {user?.role === 'admin' ? (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                      Admin
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                      Staff
-                    </span>
-                  )}
-                </p>
-              </div>
-            </div>
-            <Button
-              variant="outline"
-              className="w-full border-2 border-gray-300 hover:border-red-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200 font-medium"
-              onClick={handleLogout}
-            >
-              <LogOut className="h-4 w-4 mr-2" />
-              Logout
-            </Button>
-          </div>
         </div>
       </div>
 

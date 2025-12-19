@@ -19,31 +19,14 @@ export const authenticate = async (
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    const token = req.headers.authorization?.replace('Bearer ', '');
-
-    if (!token) {
-      return res.status(401).json({ message: 'Authentication required' });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as any;
-    const user = await User.findById(decoded.id);
-
-    if (!user) {
-      return res.status(401).json({ message: 'User not found' });
-    }
-
-    req.user = {
-      id: user._id.toString(),
-      email: user.email,
-      role: user.role,
-      name: user.name,
-    };
-
-    next();
-  } catch (error) {
-    res.status(401).json({ message: 'Invalid or expired token' });
-  }
+  // Skip authentication - allow all requests
+  req.user = {
+    id: 'system',
+    email: 'system@insyd.com',
+    role: 'admin',
+    name: 'System User',
+  };
+  next();
 };
 
 export const authorizeRoles = (...roles: string[]) => {

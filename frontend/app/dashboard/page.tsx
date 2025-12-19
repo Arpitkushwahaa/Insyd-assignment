@@ -33,6 +33,8 @@ export default function DashboardPage() {
     fetchDashboardData();
   }, []);
 
+  // Prevent unnecessary re-renders
+
   const fetchDashboardData = async () => {
     try {
       const [statsRes, movementsRes] = await Promise.all([

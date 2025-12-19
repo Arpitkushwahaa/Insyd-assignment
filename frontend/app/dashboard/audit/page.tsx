@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { formatNumber } from '@/lib/utils';
 import { Search, FileText, User, Calendar } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { useAuthStore } from '@/store/authStore';
 
 interface AuditLog {
   _id: string;
@@ -29,13 +28,10 @@ export default function AuditLogPage() {
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const { user } = useAuthStore();
 
   useEffect(() => {
-    if (user?.role === 'admin') {
-      fetchLogs();
-    }
-  }, [user, search]);
+    fetchLogs();
+  }, [search]);
 
   const fetchLogs = async () => {
     try {
@@ -60,18 +56,6 @@ export default function AuditLogPage() {
     };
     return <Badge variant={variants[action] || 'outline'}>{action}</Badge>;
   };
-
-  if (user?.role !== 'admin') {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h2>
-          <p className="text-gray-600">Only administrators can view audit logs</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
