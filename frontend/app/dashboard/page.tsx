@@ -104,40 +104,44 @@ export default function DashboardPage() {
       trendUp: true,
     },
   ];
-      color: 'text-green-600',
-      bgColor: 'bg-green-100',
-    },
-    {
-      title: 'Low Stock Alerts',
-      value: stats?.lowStockSKUs || 0,
-      icon: AlertTriangle,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-100',
-    },
-    {
-      title: 'Monthly Activity',
-      value: movements.reduce((sum, m) => sum + m.count, 0),
-      icon: TrendingUp,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100',
-    },
-  ];
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-1">Welcome back! Here's your inventory overview.</p>
+    <div className="space-y-6 animate-fadeIn">
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white shadow-xl">
+        <h1 className="text-4xl font-bold">Dashboard</h1>
+        <p className="text-blue-100 mt-2 text-lg">Welcome back! Here's your inventory overview.</p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {statCards.map((stat) => (
-          <Card key={stat.title}>
+        {statCards.map((stat, index) => (
+          <Card key={stat.title} className="hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-0 overflow-hidden animate-fadeIn" style={{ animationDelay: `${index * 100}ms` }}>
+            <div className={`absolute top-0 right-0 w-32 h-32 ${stat.bgColor} opacity-10 rounded-full -mr-16 -mt-16`}></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-gray-600">
                 {stat.title}
               </CardTitle>
+              <div className={`h-12 w-12 rounded-xl ${stat.bgColor} flex items-center justify-center shadow-lg`}>
+                <stat.icon className="h-6 w-6 text-white" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
+              <div className="flex items-center gap-1 mt-2">
+                {stat.trendUp ? (
+                  <TrendingUp className="h-4 w-4 text-green-600" />
+                ) : (
+                  <TrendingDown className="h-4 w-4 text-red-600" />
+                )}
+                <span className={`text-sm font-medium ${stat.trendUp ? 'text-green-600' : 'text-red-600'}`}>
+                  {stat.trend}
+                </span>
+                <span className="text-sm text-gray-500">vs last month</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
               <div className={`${stat.bgColor} p-2 rounded-lg`}>
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
