@@ -4,6 +4,8 @@
 
 A production-ready inventory management solution designed specifically for Architecture, Engineering, and Construction (AEC) material businesses in India. This system transforms inventory from a cost center into a strategic business asset through real-time visibility, predictive insights, and data-driven decision making.
 
+**🔗 GitHub Repository**: [https://github.com/Arpitkushwahaa/Insyd-assignment](https://github.com/Arpitkushwahaa/Insyd-assignment)
+
 ---
 
 ## 📋 Table of Contents

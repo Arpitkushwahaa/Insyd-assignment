@@ -221,5 +221,5 @@ The POC demonstrates that with a ₹2-3L investment, businesses can unlock ₹28
 ---
 
 *Document prepared for Insyd Product Engineering Assignment*  
-*POC Repository: [GitHub Link to be added]*  
-*System Demo: [Deployed URL to be added]*
+*POC Repository: https://github.com/Arpitkushwahaa/Insyd-assignment*  
+*System Demo: [To be deployed]*
