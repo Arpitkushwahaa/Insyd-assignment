@@ -9,7 +9,7 @@ export const register = async (req: AuthRequest, res: Response) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Check if user exists
+    // check if email already registered
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
@@ -36,7 +36,7 @@ export const register = async (req: AuthRequest, res: Response) => {
       performedByRole: user.role,
     });
 
-    // Generate token
+    // generate jwt token - expires in 7 days
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET!,
@@ -84,7 +84,7 @@ export const login = async (req: AuthRequest, res: Response) => {
       performedByRole: user.role,
     });
 
-    // Generate token
+    // create jwt
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET!,

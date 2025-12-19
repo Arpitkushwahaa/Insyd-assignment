@@ -10,12 +10,12 @@ export interface ISKU extends Document {
   costPrice: number;
   sellingPrice: number;
   currentStock: number;
-  unit: string; // pieces, sqft, kg, boxes, etc.
+  unit: string; // pieces, sqft, kg, boxes etc
   minReorderQuantity: number;
   maxStockLevel?: number;
-  location: string; // warehouse, showroom, site
+  location: string; // warehouse or showroom or site
   imageUrl?: string;
-  attributes?: Map<string, string>; // For category-specific attributes
+  attributes?: Map<string, string>; // category specific fields
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
