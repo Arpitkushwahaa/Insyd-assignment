@@ -172,22 +172,35 @@ export default function DashboardPage() {
                   textAnchor="end"
                   height={70}
                 />
-                <YAxis />
-                <Tooltip />
-                <Legend />
+                <YAxis tick={{ fontSize: 12, fill: '#6b7280' }} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#ffffff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  }}
+                />
+                <Legend wrapperStyle={{ paddingTop: '20px' }} />
                 <Line 
                   type="monotone" 
                   dataKey="inward" 
-                  stroke="#10b981" 
+                  stroke="#3b82f6" 
+                  fill="url(#colorInward)"
                   name="Inward"
-                  strokeWidth={2}
+                  strokeWidth={3}
+                  dot={{ fill: '#3b82f6', r: 4 }}
+                  activeDot={{ r: 6 }}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="outward" 
-                  stroke="#3b82f6" 
+                  stroke="#8b5cf6" 
+                  fill="url(#colorOutward)"
                   name="Outward"
-                  strokeWidth={2}
+                  strokeWidth={3}
+                  dot={{ fill: '#8b5cf6', r: 4 }}
+                  activeDot={{ r: 6 }}
                 />
                 <Line 
                   type="monotone" 
@@ -195,6 +208,8 @@ export default function DashboardPage() {
                   stroke="#ef4444" 
                   name="Damage"
                   strokeWidth={2}
+                  dot={{ fill: '#ef4444', r: 3 }}
+                  strokeDasharray="5 5"
                 />
               </LineChart>
             </ResponsiveContainer>
