@@ -23,6 +23,7 @@ interface DailyMovement {
   damage: number;
 }
 
+// main dashboard component
 export default function DashboardPage() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [movements, setMovements] = useState<DailyMovement[]>([]);
