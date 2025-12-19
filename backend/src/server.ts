@@ -7,36 +7,36 @@ import compression from 'compression';
 import { connectDB } from './config/database';
 import { errorHandler } from './middleware/errorHandler';
 
-// Routes
+// import routes
 import authRoutes from './routes/authRoutes';
 import skuRoutes from './routes/skuRoutes';
 import stockMovementRoutes from './routes/stockMovementRoutes';
 import analyticsRoutes from './routes/analyticsRoutes';
 import auditRoutes from './routes/auditRoutes';
 
-// Load env vars
+// load environment variables
 dotenv.config();
 
-// Connect to database
+// connect to mongodb
 connectDB();
 
-// Initialize express app
+// init express
 const app: Application = express();
 
-// Middleware
-app.use(helmet()); // Security headers
+// middlewares
+app.use(helmet());
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
     credentials: true,
   })
 );
-app.use(compression()); // Compress responses
-app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
-app.use(morgan('dev')); // Logging
+app.use(compression());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
-// Health check
+// health check endpoint
 app.get('/health', (req: Request, res: Response) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
