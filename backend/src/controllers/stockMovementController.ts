@@ -227,9 +227,15 @@ export const getStockMovementStats = async (req: AuthRequest, res: Response) => 
       { $sort: { _id: 1 } },
     ]);
 
+    // Get total count of movements
+    const totalMovements = await StockMovement.countDocuments({ 
+      createdAt: { $gte: startDate } 
+    });
+
     res.json({
-      stats,
+      movementsByType: stats,
       dailyMovements,
+      totalMovements,
     });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
