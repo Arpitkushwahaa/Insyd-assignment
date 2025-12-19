@@ -14,16 +14,16 @@ import { Badge } from '@/components/ui/badge';
 
 interface Movement {
   _id: string;
-  skuId: {
+  sku: {
     _id: string;
     name: string;
     skuCode: string;
   } | string;
-  type: string;
+  movementType: string;
   quantity: number;
   reason: string;
   referenceNumber: string;
-  performedBy: {
+  performedBy?: {
     name: string;
   };
   createdAt: string;
@@ -233,9 +233,9 @@ export default function StockMovementPage() {
           ) : (
             <div className="space-y-4">
               {movements.map((movement) => {
-                const sku = typeof movement.skuId === 'string' 
-                  ? skus.find(s => s._id === movement.skuId)
-                  : movement.skuId;
+                const sku = typeof movement.sku === 'string' 
+                  ? skus.find(s => s._id === movement.sku)
+                  : movement.sku;
                 
                 if (!sku) return null;
                 

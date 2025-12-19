@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { getAuditLogs } from '../controllers/auditController';
-import { authenticate, authorizeRoles } from '../middleware/auth';
+import { authenticate } from '../middleware/auth';
 
 const router = Router();
 
-// All routes require authentication and admin role
-router.use(authenticate, authorizeRoles('admin'));
+// All routes require authentication only (no role check)
+router.use(authenticate);
 
 router.get('/', getAuditLogs);
 

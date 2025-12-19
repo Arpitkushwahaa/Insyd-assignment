@@ -26,16 +26,6 @@ export const register = async (req: AuthRequest, res: Response) => {
       role: role || 'staff',
     });
 
-    // Create audit log
-    await AuditLog.create({
-      action: 'User registered',
-      entityType: 'user',
-      entityId: user._id,
-      performedBy: user._id,
-      performedByName: user.name,
-      performedByRole: user.role,
-    });
-
     // generate jwt token - expires in 7 days
     const token = jwt.sign(
       { id: user._id, email: user.email, role: user.role },
@@ -73,16 +63,6 @@ export const login = async (req: AuthRequest, res: Response) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-
-    // Create audit log
-    await AuditLog.create({
-      action: 'User logged in',
-      entityType: 'user',
-      entityId: user._id,
-      performedBy: user._id,
-      performedByName: user.name,
-      performedByRole: user.role,
-    });
 
     // create jwt
     const token = jwt.sign(
