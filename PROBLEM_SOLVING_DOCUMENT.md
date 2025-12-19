@@ -1,53 +1,33 @@
-# Inventory Visibility Solution for AEC Material Businesses
+# Inventory Management Solution for AEC Material Businesses
 **Problem Solving Document**  
-*Insyd Assignment - Product Engineering & Strategy*
+*Insyd Assignment - Product Engineering*
 
 ---
 
-## 1. Executive Summary
+## 1. Problem Analysis
 
-Indian AEC material businesses (tiles, sanitaryware, lighting, stone, plywood) face a critical challenge: **inventory blindness**. Without real-time visibility into stock levels, movement patterns, and SKU performance, businesses suffer from:
+### The Core Issue
+Most Indian AEC material businesses (tiles, sanitaryware, lighting) operate with **zero inventory visibility**. This leads to:
+- **Low margins**: 15-30% dead stock, 5-10% untracked losses
+- **Cash flow issues**: Money locked in slow-moving inventory
+- **Scale barriers**: Can't expand without controlling existing chaos
+- **Reactive operations**: Constant firefighting of stockouts and overstocking
 
-- **Thin margins** (3-8% net) eroded further by dead stock, damage, and poor purchasing decisions
-- **Cash locked** in slow-moving inventory instead of high-performing SKUs
-- **Scale anxiety** - reluctance to expand due to inability to manage existing complexity
-- **Reactive operations** - firefighting stockouts and overstocking simultaneously
+### Current Workflow & Pain Points
 
-**The Business Impact:**
-- 15-30% of inventory typically becomes dead or slow-moving
-- 5-10% annual revenue lost to untracked damage/loss
-- 20-40 hours/month wasted on manual stock reconciliation
-- Missed revenue opportunities from stockouts of fast-moving items
+| Process | How It Works Today | Problem |
+|---------|-------------------|---------|
+| **Procurement** | Manual reordering based on gut feel | Wrong SKUs stocked |
+| **Receiving** | Paper/WhatsApp entry | Data entry delays/errors |
+| **Storage** | Multiple locations (showroom/warehouse) | No unified view |
+| **Sales** | Manual Excel deduction | Stock data lags reality |
+| **Damage Tracking** | Rarely tracked | Silent profit erosion |
+| **Reconciliation** | Monthly physical count | Too late to act |
 
-**Our Solution:** An intelligent inventory management system that transforms inventory from a cost center into a strategic business asset by providing:
-1. Real-time visibility across all SKUs
-2. Predictive insights for reordering decisions
-3. Automated tracking of stock movements and losses
-4. Data-driven identification of profit leakage points
-
-**Expected Outcomes:** 10-15% margin improvement, 60% reduction in dead stock, 80% faster stock reconciliation, and confidence to scale.
-
----
-
-## 2. Problem Breakdown
-
-### 2.1 Current Inventory Workflow
-
-| Stage | Current Process | Pain Points |
-|-------|----------------|-------------|
-| **Procurement** | Manual reordering based on gut feel or supplier calls | Overstocking slow movers, understocking bestsellers |
-| **Receiving** | Physical count, paper/WhatsApp entry | Data entry errors, delayed updates |
-| **Storage** | Multi-location (showroom, warehouse, site) | No unified view, unclear ownership |
-| **Sales** | Manual deduction from register/Excel | Lag between sale and stock update |
-| **Damage/Loss** | Rarely tracked systematically | Silent profit erosion |
-| **Reconciliation** | Monthly physical count vs records | Time-consuming, reveals issues too late |
-| **Reporting** | No reports or basic Excel sheets | No trend analysis, no actionable insights |
-
-### 2.2 Root Causes
-
-**Operational Issues:**
-1. **Fragmented Systems:** WhatsApp, Excel, paper ledgers, mental notes
-2. **No Single Source of Truth:** Different numbers in different places
+### Root Causes
+1. **Fragmented systems**: WhatsApp + Excel + paper ledgers
+2. **No accountability**: Can't trace who did what
+3. **Manual processes**: Human errors, delays
 3. **Reactive Culture:** Act only when crisis hits (stockout/overstock)
 4. **Time Poverty:** Owners focused on sales, inventory becomes secondary
 
