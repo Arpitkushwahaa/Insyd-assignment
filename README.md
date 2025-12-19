@@ -1,83 +1,132 @@
 # Insyd Inventory Management System
 
-> Smart Inventory Management for AEC Material Businesses
-
-An inventory management solution for Architecture, Engineering and Construction (AEC) material businesses in India. Helps track inventory in real-time, get insights on slow moving items, and make data-driven decisions.
+Inventory management system for AEC material businesses built for the Insyd assignment.
 
 **GitHub**: [https://github.com/Arpitkushwahaa/Insyd-assignment](https://github.com/Arpitkushwahaa/Insyd-assignment)
 
----
+## Problem
 
-## Table of Contents
+AEC material businesses in India (tiles, sanitaryware, lighting, stone, plywood) struggle with inventory management:
+- 15-30% of stock becomes dead or slow-moving
+- Manual tracking through WhatsApp, Excel, paper ledgers
+- No visibility into what sells and what doesn't
+- Losses from damage and theft go untracked
 
-- [Problem Statement](#problem-statement)
-- [Solution](#solution-overview)
-- [Features](#key-features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Setup](#installation--setup)
-- [API Docs](#api-documentation)
-- [Deployment](#deployment-guide)
-- [Trade-offs & Design Decisions](#-trade-offs--design-decisions)
-- [Future Improvements](#-future-improvements)
-- [Screenshots](#-screenshots)
+## Solution
 
----
+Real-time inventory tracking system that helps:
+- Track all stock movements (IN/OUT/DAMAGE/TRANSFER)
+- Get alerts on low stock and slow-moving items
+- See aging analysis and turnover rates
+- Maintain audit trail for accountability
 
-## 🎯 Problem Statement
+## Features
 
-Indian AEC material businesses (tiles, sanitaryware, lighting, stone, plywood) face critical inventory challenges:
+- Dashboard with real-time KPIs
+- SKU management with categories
+- Stock movement tracking
+- Analytics and insights (aging, turnover, trends)
+- Role-based access (admin/staff)
+- Audit logging
 
-### Business Impact
-- **15-30%** of inventory becomes dead or slow-moving
-- **5-10%** annual revenue lost to untracked damage/loss
-- **20-40 hours/month** wasted on manual reconciliation
-- **Thin margins** (3-8%) further eroded by poor inventory decisions
-- **Scale anxiety** - inability to expand due to operational complexity
+## Tech Stack
 
-### Root Causes
-1. **No real-time visibility** - WhatsApp, Excel, paper ledgers creating fragmented data
-2. **Reactive operations** - Firefighting stockouts and overstocking simultaneously
-3. **No insights** - Can't identify what sells, what doesn't
-4. **Silent profit erosion** - Damage and losses going untracked
+**Backend:**
+- Node.js + Express
+- MongoDB + Mongoose
+- JWT authentication
+- TypeScript
 
----
+**Frontend:**
+- Next.js 14
+- Tailwind CSS
+- Shadcn/UI
+- Recharts
+- Zustand
 
-## 💡 Solution Overview
+## Setup
 
-Insyd Inventory is an intelligent inventory management system that provides:
+### Prerequisites
+- Node.js 18+
+- MongoDB
 
-1. **Real-Time Visibility** - Live stock levels across all SKUs and locations
-2. **Predictive Insights** - AI-powered reorder suggestions based on sales velocity
-3. **Automated Tracking** - Every stock movement recorded with audit trail
-4. **Profit Protection** - Identify slow movers, high-damage items, margin leakage
+### Installation
 
-### Expected Outcomes
-- **10-15% margin improvement**
-- **60% reduction** in dead stock
-- **80% faster** stock reconciliation
-- **Confidence to scale** with data-driven decisions
+```bash
+# clone repo
+git clone https://github.com/Arpitkushwahaa/Insyd-assignment.git
+cd Insyd-assignment
 
----
+# backend
+cd backend
+npm install
+cp .env.example .env
+# edit .env with your MongoDB URI
+npm run seed
+npm run dev
 
-## ✨ Key Features
+# frontend (new terminal)
+cd frontend
+npm install
+cp .env.example .env.local
+# edit .env.local with backend URL
+npm run dev
+```
 
-### 1. **Dashboard** 📊
-- Real-time KPIs (Total SKUs, Stock Value, Low Stock Alerts)
-- 30-day stock movement trends (Inward, Outward, Damage)
-- Quick action cards for common tasks
-- Visual analytics with charts
+Open http://localhost:3000
 
-### 2. **SKU Management** 📦
-- Complete CRUD operations for products
-- Category-based organization (tiles, sanitaryware, lighting, stone, plywood)
-- Multi-attribute support (size, finish, color, etc.)
-- Cost price, selling price, and margin tracking
-- Min/max stock level configuration
-- Location management (warehouse, showroom, site)
+**Demo Login:**
+- Admin: admin@insyd.com / password123
+- Staff: staff@insyd.com / password123
 
-### 3. **Stock Movement Tracking** 📈
-- Record movements: Inward, Outward, Damage, Loss, Adjustment, Transfer
+## Project Structure
+
+```
+backend/
+  src/
+    controllers/   # request handlers
+    models/        # mongoose schemas
+    routes/        # api routes
+    middleware/    # auth, validation
+    
+frontend/
+  app/
+    dashboard/     # main app pages
+    login/         # auth page
+  components/      # reusable UI
+  lib/            # api client, utils
+  store/          # zustand state
+```
+
+## API Endpoints
+
+- `POST /api/auth/register` - create user
+- `POST /api/auth/login` - authenticate
+- `GET /api/sku` - list SKUs
+- `POST /api/sku` - create SKU
+- `POST /api/stock-movements` - record movement
+- `GET /api/analytics/dashboard` - dashboard stats
+- `GET /api/analytics/aging` - aging report
+
+See API_DOCUMENTATION.md for complete reference.
+
+## Design Decisions
+
+- MongoDB for flexible schema (different materials have different attributes)
+- JWT for stateless auth
+- Zustand over Redux for simpler state management
+- Server-side rendering with Next.js for SEO
+- Tailwind for rapid UI development
+
+## Future Improvements
+
+- Barcode scanning for faster stock entry
+- WhatsApp notifications for low stock
+- Mobile app for warehouse staff
+- Multi-location support
+- Purchase order integration
+- Supplier management
+
 - Automatic stock calculations with validation
 - Transaction history with audit trail
 - Reference number tracking (PO, Invoice, etc.)
