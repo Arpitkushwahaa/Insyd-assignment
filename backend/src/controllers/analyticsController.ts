@@ -274,11 +274,11 @@ export const getReports = async (req: AuthRequest, res: Response) => {
         ]);
 
         const totalRevenue = outwardMovements.reduce(
-          (sum, item) => sum + item.totalRevenue,
+          (sum: number, item: any) => sum + item.totalRevenue,
           0
         );
         let cumulative = 0;
-        report = outwardMovements.map((item) => {
+        report = outwardMovements.map((item: any) => {
           cumulative += item.totalRevenue;
           const cumulativePercentage = (cumulative / totalRevenue) * 100;
           let classification = 'C';
