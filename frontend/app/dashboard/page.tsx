@@ -1,0 +1,243 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import api from '@/lib/api';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { formatCurrency, formatNumber } from '@/lib/utils';
+import { Package, TrendingUp, TrendingDown, AlertTriangle, IndianRupee } from 'lucide-react';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Skeleton } from '@/components/ui/skeleton';
+
+interface Stats {
+  totalSKUs: number;
+  activeSKUs: number;
+  lowStockSKUs: number;
+  totalStockValue: number;
+}
+
+interface DailyMovement {
+  _id: string;
+  count: number;
+  inward: number;
+  outward: number;
+  damage: number;
+}
+
+export default function DashboardPage() {
+  const [stats, setStats] = useState<Stats | null>(null);
+  const [movements, setMovements] = useState<DailyMovement[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const [statsRes, movementsRes] = await Promise.all([
+        api.get('/skus/stats'),
+        api.get('/stock-movements/stats?days=30'),
+      ]);
+      
+      setStats(statsRes.data);
+      setMovements(movementsRes.data.dailyMovements || []);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <Card key={i}>
+              <CardHeader>
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-8 w-32 mt-2" />
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const statCards = [
+    {
+      title: 'Total SKUs',
+      value: stats?.activeSKUs || 0,
+      icon: Package,
+      color: 'text-blue-600',
+      bgColor: 'bg-blue-100',
+    },
+    {
+      title: 'Stock Value',
+      value: formatCurrency(stats?.totalStockValue || 0),
+      icon: IndianRupee,
+      color: 'text-green-600',
+      bgColor: 'bg-green-100',
+    },
+    {
+      title: 'Low Stock Alerts',
+      value: stats?.lowStockSKUs || 0,
+      icon: AlertTriangle,
+      color: 'text-orange-600',
+      bgColor: 'bg-orange-100',
+    },
+    {
+      title: 'Monthly Activity',
+      value: movements.reduce((sum, m) => sum + m.count, 0),
+      icon: TrendingUp,
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-100',
+    },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <p className="text-gray-500 mt-1">Welcome back! Here's your inventory overview.</p>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {statCards.map((stat) => (
+          <Card key={stat.title}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                {stat.title}
+              </CardTitle>
+              <div className={`${stat.bgColor} p-2 rounded-lg`}>
+                <stat.icon className={`h-5 w-5 ${stat.color}`} />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{stat.value}</div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Stock Movement Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Stock Movement Trend (Last 30 Days)</CardTitle>
+            <CardDescription>Daily inward and outward movements</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={movements}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="_id" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={70}
+                />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line 
+                  type="monotone" 
+                  dataKey="inward" 
+                  stroke="#10b981" 
+                  name="Inward"
+                  strokeWidth={2}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="outward" 
+                  stroke="#3b82f6" 
+                  name="Outward"
+                  strokeWidth={2}
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="damage" 
+                  stroke="#ef4444" 
+                  name="Damage"
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Activity Summary */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Activity Summary</CardTitle>
+            <CardDescription>Total movements by type</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={movements}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis 
+                  dataKey="_id" 
+                  tick={{ fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={70}
+                />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="count" fill="#6366f1" name="Total Movements" />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Quick Actions */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Quick Actions</CardTitle>
+          <CardDescription>Common tasks to manage your inventory</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a
+              href="/dashboard/inventory"
+              className="flex items-center gap-3 p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <Package className="h-8 w-8 text-blue-600" />
+              <div>
+                <p className="font-semibold">Add New SKU</p>
+                <p className="text-sm text-gray-500">Create a new product</p>
+              </div>
+            </a>
+            <a
+              href="/dashboard/stock"
+              className="flex items-center gap-3 p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <TrendingUp className="h-8 w-8 text-green-600" />
+              <div>
+                <p className="font-semibold">Record Movement</p>
+                <p className="text-sm text-gray-500">Update stock levels</p>
+              </div>
+            </a>
+            <a
+              href="/dashboard/insights"
+              className="flex items-center gap-3 p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              <AlertTriangle className="h-8 w-8 text-orange-600" />
+              <div>
+                <p className="font-semibold">View Insights</p>
+                <p className="text-sm text-gray-500">Smart recommendations</p>
+              </div>
+            </a>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
