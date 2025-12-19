@@ -98,12 +98,17 @@ const seedAuditLogs = async () => {
         timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2), // 2 days ago
       },
       {
-        action: 'User Login',
-        entityType: 'user',
-        entityId: user._id,
+        action: 'Stock Movement Recorded - outward',
+        entityType: 'stock',
+        entityId: skus[0]?._id,
         performedBy: user._id,
         performedByName: user.name,
         performedByRole: user.role,
+        changes: {
+          movementType: 'outward',
+          quantity: 15,
+          reason: 'Customer order fulfillment',
+        },
         ipAddress: '192.168.1.104',
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
         timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
@@ -154,12 +159,16 @@ const seedAuditLogs = async () => {
         timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
       },
       {
-        action: 'User Login',
-        entityType: 'user',
-        entityId: user._id,
+        action: 'Stock Movement Recorded - inward',
+        entityType: 'stock',
         performedBy: user._id,
         performedByName: user.name,
         performedByRole: user.role,
+        changes: {
+          movementType: 'inward',
+          quantity: 200,
+          reason: 'Supplier delivery - bulk order',
+        },
         ipAddress: '192.168.1.108',
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
         timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
