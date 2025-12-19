@@ -60,7 +60,7 @@ export default function DashboardLayout({
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 py-4 space-y-1">
+          <nav className="flex-1 px-4 py-6 space-y-2">
             {navigation.map((item) => {
               if (item.adminOnly && user.role !== 'admin') return null;
               const isActive = pathname === item.href;
@@ -69,13 +69,16 @@ export default function DashboardLayout({
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                    'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group',
                     isActive
-                      ? 'bg-primary text-white'
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/50 transform scale-105'
+                      : 'text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600'
                   )}
                 >
-                  <item.icon className="h-5 w-5" />
+                  <item.icon className={cn(
+                    'h-5 w-5 transition-transform group-hover:scale-110',
+                    isActive && 'animate-pulse'
+                  )} />
                   {item.name}
                 </Link>
               );
@@ -83,17 +86,25 @@ export default function DashboardLayout({
           </nav>
 
           {/* User info */}
-          <div className="px-4 py-4 border-t border-gray-200">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
-                <Users className="h-5 w-5 text-white" />
+          <div className="px-4 py-4 border-t border-gray-200/50">
+            <div className="flex items-center gap-3 mb-4 p-3 rounded-xl bg-gradient-to-r from-blue-50 to-purple-50">
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg">
+                <Users className="h-6 w-6 text-white" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-semibold text-gray-900 truncate">
                   {user.name}
                 </p>
-                <p className="text-xs text-gray-500 truncate">
-                  {user.role === 'admin' ? 'Administrator' : 'Staff Member'}
+                <p className="text-xs font-medium text-gray-600 truncate">
+                  {user.role === 'admin' ? (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      Admin
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                      Staff
+                    </span>
+                  )}
                 </p>
               </div>
             </div>
