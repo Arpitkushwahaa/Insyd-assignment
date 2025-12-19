@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Package } from 'lucide-react';
+import { Package, Sparkles, TrendingUp, BarChart3 } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,23 +26,37 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 text-center">
-          <div className="flex justify-center mb-4">
-            <div className="h-12 w-12 rounded-full bg-primary flex items-center justify-center">
-              <Package className="h-6 w-6 text-white" />
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+      </div>
+
+      <Card className="w-full max-w-md relative backdrop-blur-sm bg-white/95 shadow-2xl border-0">
+        <CardHeader className="space-y-1 text-center pb-8">
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform duration-300">
+                <Package className="h-8 w-8 text-white" />
+              </div>
+              <div className="absolute -top-1 -right-1">
+                <Sparkles className="h-5 w-5 text-yellow-400 animate-pulse" />
+              </div>
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Insyd Inventory</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Insyd Inventory
+          </CardTitle>
+          <CardDescription className="text-base">
             Smart inventory management for AEC businesses
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-sm font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
