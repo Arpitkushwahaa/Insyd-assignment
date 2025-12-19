@@ -2,6 +2,8 @@
 
 inventory management for AEC businesses
 
+made by Arpit Kushwaha for Insyd Assignment
+
 ## what it does
 
 - tracks inventory in real time
