@@ -42,7 +42,7 @@ export default function AuditLogPage() {
       const params: any = {};
       if (search) params.search = search;
       
-      const response = await api.get('/audit-logs', { params });
+      const response = await api.get('/audit', { params });
       setLogs(response.data.logs || []);
     } catch (error) {
       console.error('Error fetching audit logs:', error);
