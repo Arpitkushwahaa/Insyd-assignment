@@ -1,52 +1,85 @@
 # Deployment Guide
 
-Complete guide to deploy Insyd Inventory Management System to production.
+Quick deployment options for production.
 
----
+## Railway (Recommended)
 
-## 📋 Pre-Deployment Checklist
+Fast deployment with built-in PostgreSQL/MongoDB support.
 
-- [ ] MongoDB Atlas account created
-- [ ] Database created and user configured
-- [ ] Environment variables prepared
-- [ ] GitHub repository created and code pushed
-- [ ] Deployment platform accounts (Vercel/Render/Railway)
-
----
-
-## 🌐 Deployment Options
-
-### Option 1: Vercel (Frontend) + Render (Backend) [Recommended]
-
-**Pros:** Free tier available, easy setup, automatic deployments  
-**Cons:** Cold starts on free tier
-
-### Option 2: Railway [All-in-One]
-
-**Pros:** Single platform for both, simple setup  
-**Cons:** No free tier
-
-### Option 3: Docker + VPS (DigitalOcean, AWS EC2)
-
-**Pros:** Full control, better performance  
-**Cons:** More complex, manual management
-
----
-
-## 🚀 Option 1: Vercel + Render Deployment
-
-### Step 1: Setup MongoDB Atlas
-
-1. Create account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a new cluster (Free M0 tier available)
-3. Create database user:
-   - Username: `insyd_admin`
-   - Password: (generate strong password)
-4. Whitelist IP: `0.0.0.0/0` (allow all) for development
-5. Get connection string:
+### Backend
+1. Push code to GitHub
+2. Go to railway.app
+3. New Project → Deploy from GitHub
+4. Select your repo → Choose backend folder
+5. Add environment variables:
    ```
-   mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/insyd_inventory?retryWrites=true&w=majority
+   MONGODB_URI=<your-mongo-uri>
+   JWT_SECRET=<random-secret>
+   PORT=5000
+   NODE_ENV=production
    ```
+6. Deploy
+
+### Frontend
+1. New service in same project
+2. Select frontend folder
+3. Add env variables:
+   ```
+   NEXT_PUBLIC_API_URL=https://your-backend.railway.app/api
+   ```
+4. Deploy
+
+## Vercel + MongoDB Atlas
+
+### Backend (Vercel Serverless)
+```bash
+cd backend
+npm i -g vercel
+vercel
+```
+
+Add environment variables in Vercel dashboard.
+
+### Frontend
+```bash
+cd frontend
+vercel
+```
+
+## Docker
+
+```bash
+# build and run
+docker-compose up --build
+
+# production mode
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```
+
+## Environment Variables
+
+### Backend (.env)
+```
+MONGODB_URI=mongodb+srv://user:pass@cluster.net/db
+JWT_SECRET=your-jwt-secret-key
+JWT_EXPIRES_IN=7d
+PORT=5000
+NODE_ENV=production
+CORS_ORIGIN=https://your-frontend.com
+```
+
+### Frontend (.env.local)
+```
+NEXT_PUBLIC_API_URL=https://your-backend-url.com/api
+```
+
+## Post-Deployment
+
+1. Seed data: `npm run seed`
+2. Test login with demo credentials
+3. Check logs for errors
+4. Setup monitoring (optional)
+
 
 ### Step 2: Deploy Backend to Render
 

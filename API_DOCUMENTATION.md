@@ -1,63 +1,109 @@
 # API Documentation
 
-**Insyd Inventory Management System**  
-Base URL: `http://localhost:5000/api` (Development)
+Base URL: `http://localhost:5000/api`
 
----
+## Authentication
 
-## 📑 Table of Contents
-
-- [Authentication](#authentication)
-- [SKU Management](#sku-management)
-- [Stock Movements](#stock-movements)
-- [Analytics & Insights](#analytics--insights)
-- [Audit Logs](#audit-logs)
-- [Error Handling](#error-handling)
-
----
-
-## 🔐 Authentication
-
-All protected endpoints require JWT token in header:
+All protected routes need JWT token:
 ```
 Authorization: Bearer <token>
 ```
 
-### Register User
+### Endpoints
 
-**POST** `/auth/register`
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | `/auth/register` | Create new user | No |
+| POST | `/auth/login` | Login and get token | No |
+| GET | `/auth/me` | Get current user | Yes |
 
-Create a new user account.
+## SKU Management
 
-**Request Body:**
-```json
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/sku` | List all SKUs | Yes |
+| POST | `/sku` | Create new SKU | Yes (Admin) |
+| GET | `/sku/:id` | Get single SKU | Yes |
+| PUT | `/sku/:id` | Update SKU | Yes (Admin) |
+| DELETE | `/sku/:id` | Delete SKU | Yes (Admin) |
+
+## Stock Movements
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/stock-movements` | List all movements | Yes |
+| POST | `/stock-movements` | Create movement (IN/OUT/ADJUST) | Yes |
+| GET | `/stock-movements/:id` | Get movement details | Yes |
+
+## Analytics
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/analytics/dashboard` | Dashboard stats | Yes |
+| GET | `/analytics/aging` | Stock aging report | Yes |
+| GET | `/analytics/turnover` | Turnover analysis | Yes |
+| GET | `/analytics/trends` | Historical trends | Yes |
+
+## Audit Logs
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | `/audit-logs` | View audit trail | Yes (Admin) |
+
+## Example Requests
+
+### Register
+```bash
+POST /auth/register
 {
-  "name": "Rahul Sharma",
-  "email": "rahul@example.com",
+  "name": "John Doe",
+  "email": "john@example.com",
   "password": "password123",
-  "role": "admin" // or "staff"
+  "role": "admin"
 }
 ```
 
-**Response:**
+### Create SKU
+```bash
+POST /sku
+{
+  "name": "Cement Bags",
+  "sku_code": "CEM-001",
+  "category": "Materials",
+  "unit": "bags",
+  "quantity": 500,
+  "reorder_level": 100,
+  "location": "Warehouse A"
+}
+```
+
+### Stock Movement
+```bash
+POST /stock-movements
+{
+  "sku_id": "507f1f77bcf86cd799439011",
+  "type": "IN",
+  "quantity": 100,
+  "reason": "Purchase order #1234"
+}
+```
+
+## Error Responses
+
+All errors return:
 ```json
 {
-  "message": "User registered successfully",
-  "user": {
-    "id": "507f1f77bcf86cd799439011",
-    "name": "Rahul Sharma",
-    "email": "rahul@example.com",
-    "role": "admin"
-  },
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  "message": "Error description"
 }
 ```
 
-### Login
+HTTP status codes:
+- 400: Bad request
+- 401: Unauthorized
+- 403: Forbidden
+- 404: Not found
+- 500: Server error
 
-**POST** `/auth/login`
-
-Authenticate user and receive token.
 
 **Request Body:**
 ```json
