@@ -1,23 +1,23 @@
 # Insyd Inventory Management System
 
-> **Smart Inventory Management for Indian AEC Material Businesses**
+> Smart Inventory Management for AEC Material Businesses
 
-A production-ready inventory management solution designed specifically for Architecture, Engineering, and Construction (AEC) material businesses in India. This system transforms inventory from a cost center into a strategic business asset through real-time visibility, predictive insights, and data-driven decision making.
+An inventory management solution for Architecture, Engineering and Construction (AEC) material businesses in India. Helps track inventory in real-time, get insights on slow moving items, and make data-driven decisions.
 
-**🔗 GitHub Repository**: [https://github.com/Arpitkushwahaa/Insyd-assignment](https://github.com/Arpitkushwahaa/Insyd-assignment)
+**GitHub**: [https://github.com/Arpitkushwahaa/Insyd-assignment](https://github.com/Arpitkushwahaa/Insyd-assignment)
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [Problem Statement](#-problem-statement)
-- [Solution Overview](#-solution-overview)
-- [Key Features](#-key-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Installation & Setup](#-installation--setup)
-- [API Documentation](#-api-documentation)
-- [Deployment Guide](#-deployment-guide)
+- [Problem Statement](#problem-statement)
+- [Solution](#solution-overview)
+- [Features](#key-features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Setup](#installation--setup)
+- [API Docs](#api-documentation)
+- [Deployment](#deployment-guide)
 - [Trade-offs & Design Decisions](#-trade-offs--design-decisions)
 - [Future Improvements](#-future-improvements)
 - [Screenshots](#-screenshots)
