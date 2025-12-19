@@ -75,7 +75,21 @@ export const createSKU = async (req: AuthRequest, res: Response) => {
 
     const sku = await SKU.create(skuData);
 
-    // Skip audit log for now (no real user authentication)
+    // Create audit log
+    await AuditLog.create({
+      action: 'SKU Created',
+      entityType: 'sku',
+      entityId: sku._id,
+      performedBy: req.user!.id,
+      performedByName: req.user!.name,
+      performedByRole: req.user!.role,
+      changes: {
+        name: sku.name,
+        skuCode: sku.skuCode,
+        category: sku.category,
+        currentStock: sku.currentStock,
+      },
+    });
 
     res.status(201).json({
       message: 'SKU created successfully',
@@ -104,7 +118,16 @@ export const updateSKU = async (req: AuthRequest, res: Response) => {
       runValidators: true,
     });
 
-    // Skip audit log for now (no real user authentication)
+    // Create audit log
+    await AuditLog.create({
+      action: 'SKU Updated',
+      entityType: 'sku',
+      entityId: sku!._id,
+      performedBy: req.user!.id,
+      performedByName: req.user!.name,
+      performedByRole: req.user!.role,
+      changes: updates,
+    });
 
     res.json({
       message: 'SKU updated successfully',
@@ -128,7 +151,20 @@ export const deleteSKU = async (req: AuthRequest, res: Response) => {
     sku.isActive = false;
     await sku.save();
 
-    // Skip audit log for now (no real user authentication)
+    // Create audit log
+    await AuditLog.create({
+      action: 'SKU Deleted',
+      entityType: 'sku',
+      entityId: sku._id,
+      performedBy: req.user!.id,
+      performedByName: req.user!.name,
+      performedByRole: req.user!.role,
+      changes: {
+        skuCode: sku.skuCode,
+        name: sku.name,
+        isActive: false,
+      },
+    });
 
     res.json({
       message: 'SKU deleted successfully',

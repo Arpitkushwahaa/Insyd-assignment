@@ -101,7 +101,30 @@ export const createStockMovement = async (req: AuthRequest, res: Response) => {
       { session }
     );
 
-    // Skip audit log for now (no real user authentication)
+    // Create audit log for stock movement
+    await AuditLog.create(
+      [
+        {
+          action: `Stock Movement Recorded - ${movementType}`,
+          entityType: 'stock',
+          entityId: movement[0]._id,
+          performedBy: req.user!.id,
+          performedByName: req.user!.name,
+          performedByRole: req.user!.role,
+          changes: {
+            skuCode: sku.skuCode,
+            skuName: sku.name,
+            movementType,
+            quantity,
+            previousStock,
+            newStock,
+            reason,
+            referenceNumber,
+          },
+        },
+      ],
+      { session }
+    );
 
     await session.commitTransaction();
 
