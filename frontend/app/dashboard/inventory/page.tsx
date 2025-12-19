@@ -5,7 +5,9 @@ import api from '@/lib/api';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { formatCurrency, formatNumber } from '@/lib/utils';
 import { Search, Plus, Package, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -29,6 +31,19 @@ export default function InventoryPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('all');
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    skuCode: '',
+    name: '',
+    category: 'tiles',
+    supplier: '',
+    costPrice: '',
+    sellingPrice: '',
+    currentStock: '',
+    unit: 'pieces',
+    minReorderQuantity: '',
+    location: ''
+  });
 
   useEffect(() => {
     fetchSKUs();
@@ -46,6 +61,35 @@ export default function InventoryPage() {
       console.error('Error fetching SKUs:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await api.post('/skus', {
+        ...formData,
+        costPrice: parseFloat(formData.costPrice),
+        sellingPrice: parseFloat(formData.sellingPrice),
+        currentStock: parseInt(formData.currentStock),
+        minReorderQuantity: parseInt(formData.minReorderQuantity)
+      });
+      setIsOpen(false);
+      setFormData({
+        skuCode: '',
+        name: '',
+        category: 'tiles',
+        supplier: '',
+        costPrice: '',
+        sellingPrice: '',
+        currentStock: '',
+        unit: 'pieces',
+        minReorderQuantity: '',
+        location: ''
+      });
+      fetchSKUs();
+    } catch (error: any) {
+      alert(error.response?.data?.message || 'Failed to add SKU');
     }
   };
 
