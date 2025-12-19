@@ -16,8 +16,8 @@ export interface IStockMovement extends Document {
   referenceNumber?: string; // Invoice, PO, etc.
   fromLocation?: string;
   toLocation?: string;
-  performedBy: mongoose.Types.ObjectId;
-  performedByName: string;
+  performedBy?: mongoose.Types.ObjectId;
+  performedByName?: string;
   notes?: string;
   createdAt: Date;
 }
@@ -85,11 +85,11 @@ const StockMovementSchema = new Schema<IStockMovement>(
     performedBy: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: false,
     },
     performedByName: {
       type: String,
-      required: true,
+      required: false,
     },
     notes: {
       type: String,

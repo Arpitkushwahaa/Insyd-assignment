@@ -43,7 +43,7 @@ export default function StockMovementPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     skuId: '',
-    type: 'IN',
+    movementType: 'inward',
     quantity: '',
     reason: '',
     referenceNumber: ''
@@ -84,7 +84,7 @@ export default function StockMovementPage() {
       setIsOpen(false);
       setFormData({
         skuId: '',
-        type: 'IN',
+        movementType: 'inward',
         quantity: '',
         reason: '',
         referenceNumber: ''
@@ -160,16 +160,16 @@ export default function StockMovementPage() {
 
               <div className="space-y-2">
                 <Label>Movement Type</Label>
-                <Select value={formData.type} onValueChange={(value) => setFormData({...formData, type: value})}>
+                <Select value={formData.movementType} onValueChange={(value) => setFormData({...formData, movementType: value})}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="IN">Inward (Stock In)</SelectItem>
-                    <SelectItem value="OUT">Outward (Stock Out)</SelectItem>
-                    <SelectItem value="DAMAGE">Damage</SelectItem>
-                    <SelectItem value="LOSS">Loss</SelectItem>
-                    <SelectItem value="ADJUSTMENT">Adjustment</SelectItem>
+                    <SelectItem value="inward">Inward (Stock In)</SelectItem>
+                    <SelectItem value="outward">Outward (Stock Out)</SelectItem>
+                    <SelectItem value="damage">Damage</SelectItem>
+                    <SelectItem value="loss">Loss</SelectItem>
+                    <SelectItem value="adjustment">Adjustment</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

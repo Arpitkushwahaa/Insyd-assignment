@@ -95,8 +95,6 @@ export const createStockMovement = async (req: AuthRequest, res: Response) => {
           referenceNumber,
           fromLocation,
           toLocation,
-          performedBy: req.user!.id,
-          performedByName: req.user!.name,
           notes,
         },
       ],
