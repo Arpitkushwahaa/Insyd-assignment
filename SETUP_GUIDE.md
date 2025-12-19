@@ -1,52 +1,90 @@
-# Quick Start Guide
+# Setup Guide
 
-This guide will help you set up and run the Insyd Inventory Management System on your local machine.
+Quick guide to get the project running locally.
 
----
+## Prerequisites
 
-## ⚡ Prerequisites
+- Node.js 18+
+- MongoDB (local or Atlas)
+- Git
 
-Before you begin, ensure you have the following installed:
+## Installation
 
-- **Node.js** 18 or higher ([Download](https://nodejs.org/))
-- **npm** (comes with Node.js)
-- **MongoDB** ([Download](https://www.mongodb.com/try/download/community)) OR MongoDB Atlas account (free)
-- **Git** ([Download](https://git-scm.com/))
+### 1. Clone the repo
 
----
-
-## 📦 Installation Steps
-
-### Step 1: Clone or Extract the Project
-
-```powershell
-# If you have the zip file, extract it
-# Or if using git:
-cd "C:\Users\kushw\Downloads"
-cd "Insyd Assignment"
+```bash
+git clone https://github.com/Arpitkushwahaa/Insyd-assignment.git
+cd Insyd-assignment
 ```
 
-### Step 2: Install MongoDB (If not using Atlas)
+### 2. Backend Setup
 
-**Option A: Local MongoDB**
-1. Download MongoDB Community Edition
-2. Install with default settings
-3. MongoDB will run on `mongodb://localhost:27017`
-
-**Option B: MongoDB Atlas (Cloud - Recommended)**
-1. Create free account at https://www.mongodb.com/cloud/atlas
-2. Create a free cluster (M0)
-3. Create database user
-4. Get connection string: `mongodb+srv://user:pass@cluster.mongodb.net/insyd_inventory`
-
-### Step 3: Setup Backend
-
-```powershell
-# Navigate to backend folder
+```bash
 cd backend
-
-# Install dependencies (this will take 2-3 minutes)
 npm install
+
+# create .env file
+cp .env.example .env
+```
+
+Edit `.env` and add your MongoDB URI:
+```
+MONGODB_URI=mongodb://localhost:27017/insyd_inventory
+JWT_SECRET=your-secret-key-here
+PORT=5000
+```
+
+### 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+
+# create env file
+cp .env.example .env.local
+```
+
+Edit `.env.local`:
+```
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
+
+## Running the App
+
+### Start Backend
+```bash
+cd backend
+npm run seed  # load demo data
+npm run dev   # starts on port 5000
+```
+
+### Start Frontend
+```bash
+cd frontend
+npm run dev   # starts on port 3000
+```
+
+Open http://localhost:3000
+
+## Demo Login
+
+- Admin: `admin@insyd.com` / `password123`
+- Staff: `staff@insyd.com` / `password123`
+
+## Troubleshooting
+
+**MongoDB connection error:**
+- Check if MongoDB is running
+- Verify connection string in .env
+
+**Port already in use:**
+- Change PORT in backend .env
+- Change port in frontend .env.local
+
+**Dependencies error:**
+- Delete node_modules and package-lock.json
+- Run npm install again
+
 
 # Create environment file
 Copy-Item .env.example .env
