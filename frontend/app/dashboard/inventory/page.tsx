@@ -106,10 +106,144 @@ export default function InventoryPage() {
           <h1 className="text-3xl font-bold text-gray-900">Inventory Management</h1>
           <p className="text-gray-500 mt-1">Manage your SKUs and stock levels</p>
         </div>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          Add SKU
-        </Button>
+        
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+              <Plus className="h-4 w-4 mr-2" />
+              Add SKU
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Add New SKU</DialogTitle>
+              <DialogDescription>Create a new product in your inventory</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>SKU Code *</Label>
+                  <Input
+                    value={formData.skuCode}
+                    onChange={(e) => setFormData({...formData, skuCode: e.target.value})}
+                    placeholder="e.g., TIL-001"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Product Name *</Label>
+                  <Input
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    placeholder="e.g., Ceramic Floor Tiles"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Category *</Label>
+                  <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="tiles">Tiles</SelectItem>
+                      <SelectItem value="sanitaryware">Sanitaryware</SelectItem>
+                      <SelectItem value="lighting">Lighting</SelectItem>
+                      <SelectItem value="stone">Stone</SelectItem>
+                      <SelectItem value="plywood">Plywood</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Supplier</Label>
+                  <Input
+                    value={formData.supplier}
+                    onChange={(e) => setFormData({...formData, supplier: e.target.value})}
+                    placeholder="Supplier name"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Cost Price *</Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={formData.costPrice}
+                    onChange={(e) => setFormData({...formData, costPrice: e.target.value})}
+                    placeholder="0.00"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Selling Price *</Label>
+                  <Input
+                    type="number"
+                    step="0.01"
+                    value={formData.sellingPrice}
+                    onChange={(e) => setFormData({...formData, sellingPrice: e.target.value})}
+                    placeholder="0.00"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label>Current Stock *</Label>
+                  <Input
+                    type="number"
+                    value={formData.currentStock}
+                    onChange={(e) => setFormData({...formData, currentStock: e.target.value})}
+                    placeholder="0"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Unit *</Label>
+                  <Select value={formData.unit} onValueChange={(value) => setFormData({...formData, unit: value})}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pieces">Pieces</SelectItem>
+                      <SelectItem value="boxes">Boxes</SelectItem>
+                      <SelectItem value="sqft">Sq.Ft</SelectItem>
+                      <SelectItem value="kg">Kg</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Min Reorder Qty *</Label>
+                  <Input
+                    type="number"
+                    value={formData.minReorderQuantity}
+                    onChange={(e) => setFormData({...formData, minReorderQuantity: e.target.value})}
+                    placeholder="0"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Location</Label>
+                <Input
+                  value={formData.location}
+                  onChange={(e) => setFormData({...formData, location: e.target.value})}
+                  placeholder="e.g., Warehouse A, Section 3"
+                />
+              </div>
+
+              <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-purple-600">
+                Add SKU
+              </Button>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Filters */}

@@ -18,7 +18,7 @@ interface Movement {
     _id: string;
     name: string;
     skuCode: string;
-  };
+  } | string;
   type: string;
   quantity: number;
   reason: string;
@@ -225,31 +225,39 @@ export default function StockMovementPage() {
             </div>
           ) : (
             <div className="space-y-4">
-              {movements.map((movement) => (
-                <div key={movement._id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
-                  <div className="flex items-center gap-4">
-                    <div className="p-2 bg-gray-100 rounded-lg">
-                      {getTypeIcon(movement.type)}
+              {movements.map((movement) => {
+                const sku = typeof movement.skuId === 'string' 
+                  ? skus.find(s => s._id === movement.skuId)
+                  : movement.skuId;
+                
+                if (!sku) return null;
+                
+                return (
+                  <div key={movement._id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                    <div className="flex items-center gap-4">
+                      <div className="p-2 bg-gray-100 rounded-lg">
+                        {getTypeIcon(movement.type)}
+                      </div>
+                      <div>
+                        <p className="font-semibold">{typeof sku === 'object' ? sku.name : 'Unknown SKU'}</p>
+                        <p className="text-sm text-gray-600">{typeof sku === 'object' ? sku.skuCode : ''}</p>
+                        <p className="text-xs text-gray-500 mt-1">{movement.reason}</p>
+                        {movement.referenceNumber && (
+                          <p className="text-xs text-gray-400">Ref: {movement.referenceNumber}</p>
+                        )}
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-semibold">{movement.skuId.name}</p>
-                      <p className="text-sm text-gray-600">{movement.skuId.skuCode}</p>
-                      <p className="text-xs text-gray-500 mt-1">{movement.reason}</p>
-                      {movement.referenceNumber && (
-                        <p className="text-xs text-gray-400">Ref: {movement.referenceNumber}</p>
-                      )}
+                    <div className="text-right">
+                      {getTypeBadge(movement.type)}
+                      <p className="text-lg font-bold mt-1">{formatNumber(movement.quantity)}</p>
+                      <p className="text-xs text-gray-500">{movement.performedBy?.name}</p>
+                      <p className="text-xs text-gray-400">
+                        {new Date(movement.createdAt).toLocaleDateString()}
+                      </p>
                     </div>
                   </div>
-                  <div className="text-right">
-                    {getTypeBadge(movement.type)}
-                    <p className="text-lg font-bold mt-1">{formatNumber(movement.quantity)}</p>
-                    <p className="text-xs text-gray-500">{movement.performedBy?.name}</p>
-                    <p className="text-xs text-gray-400">
-                      {new Date(movement.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </CardContent>
