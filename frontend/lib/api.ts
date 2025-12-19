@@ -21,11 +21,12 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle errors
+// handle response errors
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
+      // logout on unauthorized
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';
