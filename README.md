@@ -1,131 +1,48 @@
-# Insyd Inventory Management System
+# Insyd Inventory System
 
-Inventory management system for AEC material businesses built for the Insyd assignment.
+inventory management for AEC businesses
 
-**GitHub**: [https://github.com/Arpitkushwahaa/Insyd-assignment](https://github.com/Arpitkushwahaa/Insyd-assignment)
+## what it does
 
-## Problem
+- tracks inventory in real time
+- shows aging and slow moving stock
+- records all movements with audit trail
+- alerts for low stock
 
-AEC material businesses in India (tiles, sanitaryware, lighting, stone, plywood) struggle with inventory management:
-- 15-30% of stock becomes dead or slow-moving
-- Manual tracking through WhatsApp, Excel, paper ledgers
-- No visibility into what sells and what doesn't
-- Losses from damage and theft go untracked
+## tech
 
-## Solution
+backend: node.js, express, mongodb, typescript
+frontend: next.js 14, tailwind, shadcn ui
 
-Real-time inventory tracking system that helps:
-- Track all stock movements (IN/OUT/DAMAGE/TRANSFER)
-- Get alerts on low stock and slow-moving items
-- See aging analysis and turnover rates
-- Maintain audit trail for accountability
-
-## Features
-
-- Dashboard with real-time KPIs
-- SKU management with categories
-- Stock movement tracking
-- Analytics and insights (aging, turnover, trends)
-- Role-based access (admin/staff)
-- Audit logging
-
-## Tech Stack
-
-**Backend:**
-- Node.js + Express
-- MongoDB + Mongoose
-- JWT authentication
-- TypeScript
-
-**Frontend:**
-- Next.js 14
-- Tailwind CSS
-- Shadcn/UI
-- Recharts
-- Zustand
-
-## Setup
-
-### Prerequisites
-- Node.js 18+
-- MongoDB
-
-### Installation
+## setup
 
 ```bash
-# clone repo
-git clone https://github.com/Arpitkushwahaa/Insyd-assignment.git
-cd Insyd-assignment
-
 # backend
 cd backend
 npm install
-cp .env.example .env
-# edit .env with your MongoDB URI
 npm run seed
 npm run dev
 
-# frontend (new terminal)
-cd frontend
+# frontend
+cd frontend  
 npm install
-cp .env.example .env.local
-# edit .env.local with backend URL
 npm run dev
 ```
 
-Open http://localhost:3000
+login: admin@insyd.com / password123
 
-**Demo Login:**
-- Admin: admin@insyd.com / password123
-- Staff: staff@insyd.com / password123
-
-## Project Structure
+## structure
 
 ```
-backend/
-  src/
-    controllers/   # request handlers
-    models/        # mongoose schemas
-    routes/        # api routes
-    middleware/    # auth, validation
-    
-frontend/
-  app/
-    dashboard/     # main app pages
-    login/         # auth page
-  components/      # reusable UI
-  lib/            # api client, utils
-  store/          # zustand state
+backend/src/
+  controllers/
+  models/
+  routes/
+  
+frontend/app/
+  dashboard/
+  login/
 ```
-
-## API Endpoints
-
-- `POST /api/auth/register` - create user
-- `POST /api/auth/login` - authenticate
-- `GET /api/sku` - list SKUs
-- `POST /api/sku` - create SKU
-- `POST /api/stock-movements` - record movement
-- `GET /api/analytics/dashboard` - dashboard stats
-- `GET /api/analytics/aging` - aging report
-
-See API_DOCUMENTATION.md for complete reference.
-
-## Design Decisions
-
-- MongoDB for flexible schema (different materials have different attributes)
-- JWT for stateless auth
-- Zustand over Redux for simpler state management
-- Server-side rendering with Next.js for SEO
-- Tailwind for rapid UI development
-
-## Future Improvements
-
-- Barcode scanning for faster stock entry
-- WhatsApp notifications for low stock
-- Mobile app for warehouse staff
-- Multi-location support
-- Purchase order integration
-- Supplier management
 
 - Automatic stock calculations with validation
 - Transaction history with audit trail

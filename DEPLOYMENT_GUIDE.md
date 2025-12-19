@@ -1,84 +1,28 @@
-# Deployment Guide
+# deployment
 
-Quick deployment options for production.
+## railway
 
-## Railway (Recommended)
+1. push to github
+2. railway.app → new project
+3. deploy backend and frontend separately
+4. add env variables
+5. done
 
-Fast deployment with built-in PostgreSQL/MongoDB support.
+## vercel
 
-### Backend
-1. Push code to GitHub
-2. Go to railway.app
-3. New Project → Deploy from GitHub
-4. Select your repo → Choose backend folder
-5. Add environment variables:
-   ```
-   MONGODB_URI=<your-mongo-uri>
-   JWT_SECRET=<random-secret>
-   PORT=5000
-   NODE_ENV=production
-   ```
-6. Deploy
-
-### Frontend
-1. New service in same project
-2. Select frontend folder
-3. Add env variables:
-   ```
-   NEXT_PUBLIC_API_URL=https://your-backend.railway.app/api
-   ```
-4. Deploy
-
-## Vercel + MongoDB Atlas
-
-### Backend (Vercel Serverless)
 ```bash
 cd backend
-npm i -g vercel
+vercel
+
+cd frontend  
 vercel
 ```
 
-Add environment variables in Vercel dashboard.
-
-### Frontend
-```bash
-cd frontend
-vercel
-```
-
-## Docker
+## docker
 
 ```bash
-# build and run
 docker-compose up --build
-
-# production mode
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 ```
-
-## Environment Variables
-
-### Backend (.env)
-```
-MONGODB_URI=mongodb+srv://user:pass@cluster.net/db
-JWT_SECRET=your-jwt-secret-key
-JWT_EXPIRES_IN=7d
-PORT=5000
-NODE_ENV=production
-CORS_ORIGIN=https://your-frontend.com
-```
-
-### Frontend (.env.local)
-```
-NEXT_PUBLIC_API_URL=https://your-backend-url.com/api
-```
-
-## Post-Deployment
-
-1. Seed data: `npm run seed`
-2. Test login with demo credentials
-3. Check logs for errors
-4. Setup monitoring (optional)
 
 
 ### Step 2: Deploy Backend to Render

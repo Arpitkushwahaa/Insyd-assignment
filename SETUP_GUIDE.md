@@ -1,89 +1,37 @@
-# Setup Guide
+# setup
 
-Quick guide to get the project running locally.
-
-## Prerequisites
-
-- Node.js 18+
-- MongoDB (local or Atlas)
-- Git
-
-## Installation
-
-### 1. Clone the repo
+## install
 
 ```bash
-git clone https://github.com/Arpitkushwahaa/Insyd-assignment.git
-cd Insyd-assignment
-```
-
-### 2. Backend Setup
-
-```bash
+# backend
 cd backend
 npm install
+npm run seed
+npm run dev
 
-# create .env file
-cp .env.example .env
+# frontend
+cd frontend
+npm install  
+npm run dev
 ```
 
-Edit `.env` and add your MongoDB URI:
+## env files
+
+backend .env:
 ```
-MONGODB_URI=mongodb://localhost:27017/insyd_inventory
-JWT_SECRET=your-secret-key-here
+MONGODB_URI=your-mongo-uri
+JWT_SECRET=your-secret
 PORT=5000
 ```
 
-### 3. Frontend Setup
-
-```bash
-cd frontend
-npm install
-
-# create env file
-cp .env.example .env.local
-```
-
-Edit `.env.local`:
+frontend .env.local:
 ```
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ```
 
-## Running the App
+## login
 
-### Start Backend
-```bash
-cd backend
-npm run seed  # load demo data
-npm run dev   # starts on port 5000
-```
-
-### Start Frontend
-```bash
-cd frontend
-npm run dev   # starts on port 3000
-```
-
-Open http://localhost:3000
-
-## Demo Login
-
-- Admin: `admin@insyd.com` / `password123`
-- Staff: `staff@insyd.com` / `password123`
-
-## Troubleshooting
-
-**MongoDB connection error:**
-- Check if MongoDB is running
-- Verify connection string in .env
-
-**Port already in use:**
-- Change PORT in backend .env
-- Change port in frontend .env.local
-
-**Dependencies error:**
-- Delete node_modules and package-lock.json
-- Run npm install again
+admin@insyd.com / password123
 
 
 # Create environment file

@@ -1,108 +1,46 @@
-# API Documentation
+# api endpoints
 
-Base URL: `http://localhost:5000/api`
+base: http://localhost:5000/api
 
-## Authentication
+auth header: `Authorization: Bearer <token>`
 
-All protected routes need JWT token:
-```
-Authorization: Bearer <token>
-```
+## routes
 
-### Endpoints
+### auth
+- POST /auth/register
+- POST /auth/login  
+- GET /auth/me
 
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/auth/register` | Create new user | No |
-| POST | `/auth/login` | Login and get token | No |
-| GET | `/auth/me` | Get current user | Yes |
+### sku
+- GET /sku
+- POST /sku (admin)
+- GET /sku/:id
+- PUT /sku/:id (admin)
+- DELETE /sku/:id (admin)
 
-## SKU Management
+### stock
+- GET /stock-movements
+- POST /stock-movements
+- GET /stock-movements/:id
 
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/sku` | List all SKUs | Yes |
-| POST | `/sku` | Create new SKU | Yes (Admin) |
-| GET | `/sku/:id` | Get single SKU | Yes |
-| PUT | `/sku/:id` | Update SKU | Yes (Admin) |
-| DELETE | `/sku/:id` | Delete SKU | Yes (Admin) |
+### analytics  
+- GET /analytics/dashboard
+- GET /analytics/aging
+- GET /analytics/turnover
+- GET /analytics/trends
 
-## Stock Movements
+### audit
+- GET /audit-logs (admin)
 
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/stock-movements` | List all movements | Yes |
-| POST | `/stock-movements` | Create movement (IN/OUT/ADJUST) | Yes |
-| GET | `/stock-movements/:id` | Get movement details | Yes |
+## example
 
-## Analytics
-
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/analytics/dashboard` | Dashboard stats | Yes |
-| GET | `/analytics/aging` | Stock aging report | Yes |
-| GET | `/analytics/turnover` | Turnover analysis | Yes |
-| GET | `/analytics/trends` | Historical trends | Yes |
-
-## Audit Logs
-
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/audit-logs` | View audit trail | Yes (Admin) |
-
-## Example Requests
-
-### Register
-```bash
-POST /auth/register
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "password123",
-  "role": "admin"
-}
-```
-
-### Create SKU
-```bash
-POST /sku
-{
-  "name": "Cement Bags",
-  "sku_code": "CEM-001",
-  "category": "Materials",
-  "unit": "bags",
-  "quantity": 500,
-  "reorder_level": 100,
-  "location": "Warehouse A"
-}
-```
-
-### Stock Movement
-```bash
-POST /stock-movements
-{
-  "sku_id": "507f1f77bcf86cd799439011",
-  "type": "IN",
-  "quantity": 100,
-  "reason": "Purchase order #1234"
-}
-```
-
-## Error Responses
-
-All errors return:
 ```json
+POST /auth/login
 {
-  "message": "Error description"
+  "email": "admin@insyd.com",
+  "password": "password123"
 }
 ```
-
-HTTP status codes:
-- 400: Bad request
-- 401: Unauthorized
-- 403: Forbidden
-- 404: Not found
-- 500: Server error
 
 
 **Request Body:**
