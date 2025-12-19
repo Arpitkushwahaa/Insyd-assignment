@@ -6,16 +6,10 @@ import { useAuthStore } from '@/store/authStore';
 
 export default function Home() {
   const router = useRouter();
-  const { token, checkAuth } = useAuthStore();
 
   useEffect(() => {
-    checkAuth();
-    if (token) {
-      router.push('/dashboard');
-    } else {
-      router.push('/login');
-    }
-  }, [token, router, checkAuth]);
+    router.push('/dashboard');
+  }, [router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen">
