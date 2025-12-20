@@ -1,9 +1,11 @@
-import express from "express";
-import { clerkWebhook, syncCurrentUser } from "../controllers/authcontroller.js";
+import { Router } from 'express';
+import { register, login, getProfile } from '../controllers/authController';
+import { authenticate } from '../middleware/auth';
 
-const router = express.Router();
+const router = Router();
 
-router.post("/webhook", clerkWebhook);
-router.post("/sync", syncCurrentUser);
+router.post('/register', register);
+router.post('/login', login);
+router.get('/profile', authenticate, getProfile);
 
 export default router;
